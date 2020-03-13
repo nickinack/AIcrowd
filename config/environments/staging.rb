@@ -19,5 +19,16 @@ Rails.application.configure do
   config.action_mailer.default_url_options         = { host: ENV["DOMAIN_NAME"] }
   config.action_controller.asset_host              = "https://#{ENV['CLOUDFRONT_ASSETS_DOMAIN']}"
   config.active_record.dump_schema_after_migration = false
+
+  config.cache_store = :mem_cache_store,
+                       (ENV['MEMCACHIER_SERVERS'].to_s).split(','),
+                       {
+                         username: ENV['MEMCACHIER_USERNAME'],
+                         password: ENV['MEMCACHIER_PASSWORD'],
+                         failover: true,
+                         socket_timeout: 1.5,
+                         socket_failure_delay: 0.2,
+                         down_retry_delay: 60
+                       }
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
