@@ -116,7 +116,6 @@ describe CalculateLeaderboardService, api: true do
     # counts
     it { expect(Leaderboard.count).to eq(3) }
     it { expect(OngoingLeaderboard.count).to eq(3) }
-    it { expect(PreviousOngoingLeaderboard.count).to eq(2) }
 
     # rounding
     it { expect(p1s1.score_display).to eq(30.05) }
