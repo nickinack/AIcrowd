@@ -100,6 +100,7 @@ GEM
       warden
     autoprefixer-rails (9.7.6)
       execjs
+    awesome_print (1.8.0)
     aws-sdk (2.11.190)
       aws-sdk-resources (= 2.11.190)
     aws-sdk-core (2.11.190)
@@ -921,6 +922,7 @@ DEPENDENCIES
   ahoy_matey
   aicrowd_evaluations!
   authtrail
+  awesome_print (~> 1.8)
   aws-sdk (~> 2.2)
   blazer
   bootstrap (~> 4.3.1)

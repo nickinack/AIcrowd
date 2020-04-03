@@ -105,6 +105,7 @@ gem 'irbtools', require: 'irbtools/binding'
 
 # ACE editor
 gem 'ace-rails-ap'
+gem 'awesome_print', '~> 1.8'
 
 group :development do
   gem "letter_opener"

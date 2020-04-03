@@ -6,6 +6,7 @@ class Submission < ApplicationRecord
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
+  belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
 
@@ -17,6 +18,7 @@ class Submission < ApplicationRecord
                                 reject_if:     ->(f) { f[:submission_file_s3_key].blank? },
                                 allow_destroy: true
   has_many :votes, as: :votable
+  has_many :migration_mappings, class_name: 'MigrationMapping', as: :source
 
   as_enum :grading_status,
           [:ready, :submitted, :initiated, :graded, :failed], map: :string
