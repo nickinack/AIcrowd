@@ -54,12 +54,14 @@
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
         <% end %>
       </td>
-      <% submission = leaderboard.submission %>
-      <% if submission.present? && policy(submission).show? %>
-        <td>
-          <%= social_share('facebook', challenge, leaderboard) %>
-          <%= social_share('twitter', challenge, leaderboard) %>
-        </td>
+      <% unless leaderboard.class.name == 'DisentanglementLeaderboard' %>
+        <% submission = leaderboard.submission %>
+        <% if submission.present? && policy(submission).show? %>
+          <td>
+            <%= social_share('facebook', challenge, leaderboard) %>
+            <%= social_share('twitter', challenge, leaderboard) %>
+          </td>
+        <% end %>
       <% end %>
     <% end %>
   </tr>
