@@ -312,8 +312,6 @@ class ChallengesController < ApplicationController
       :banner_color,
       :big_challenge_card_image,
       :practice_flag,
-      :freeze_flag,
-      :freeze_duration,
       image_attributes: [
         :id,
         :image,
@@ -345,7 +343,9 @@ class ChallengesController < ApplicationController
         :active,
         :leaderboard_note,
         :primary_sort_order,
-        :secondary_sort_order
+        :secondary_sort_order,
+        :freeze_flag,
+        :freeze_duration
       ],
       challenge_rules_attributes: [
         :id,

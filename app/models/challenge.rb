@@ -205,10 +205,6 @@ class Challenge < ApplicationRecord
     errors.add(:featured_sequence, 'should be greater than zero') if featured_sequence.to_i <= 0
   end
 
-  def positive_integer
-    errors.add(:freeze_duration, 'should be positive integer') if freeze_duration.to_i <= 0
-  end
-
   def teams_frozen?
     if status == :completed
       # status set
