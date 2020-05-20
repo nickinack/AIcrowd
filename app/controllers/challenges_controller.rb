@@ -312,6 +312,8 @@ class ChallengesController < ApplicationController
       :banner_color,
       :big_challenge_card_image,
       :practice_flag,
+      :freeze_flag,
+      :freeze_duration,
       image_attributes: [
         :id,
         :image,
