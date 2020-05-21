@@ -56,7 +56,7 @@ class ChallengeRound < ApplicationRecord
   end
 
   def positive_integer
-    errors.add(:freeze_duration, 'should be positive integer') if freeze_duration.to_i <= 0
+    errors.add(:freeze_duration, 'should be positive integer') if freeze_duration.present? && freeze_duration.to_i <= 0
   end
 
   def set_defaults
