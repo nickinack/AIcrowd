@@ -79,6 +79,18 @@ class NotificationService
     link    = challenge_url(@notifiable.challenge)
   end
 
+  def submission
+    score   = @notifiable.score
+    message = "Your Learning how to walk submission has been graded with a score of #{score}"
+    Notification
+      .create!(
+        participant: @participant,
+        notifiable: @notifiable,
+        notification_type: @notification_type,
+        message: message,
+        is_new: true)
+  end
+
   def grading_failed
     messsage = "Your Learning how to walk submission has failed grading"
     thumb = image_url(@notifiable.challenge)

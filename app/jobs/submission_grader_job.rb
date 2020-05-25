@@ -7,6 +7,7 @@ class SubmissionGraderJob < ApplicationJob
     else
       GraderService.new(submission_id: submission_id).call
     end
+    Notification::SubmissionNotificationJob.perform_later(submission_id)
   end
 
   private
