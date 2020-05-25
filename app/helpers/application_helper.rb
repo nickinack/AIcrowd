@@ -149,4 +149,8 @@ module ApplicationHelper
   def footer_text
     raw Setting.footer_record
   end
+
+  def notification_time(time)
+    time.strftime("%B %d, %Y %H:%M")
+  end
 end
