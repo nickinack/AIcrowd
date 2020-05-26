@@ -80,8 +80,11 @@ class NotificationService
   end
 
   def submission
-    score   = @notifiable.score
-    message = "Your Learning how to walk submission has been graded with a score of #{score}"
+    message = if @notifiable.grading_message == 'Graded Successfully !'
+                "Your Learning how to walk submission has been graded with a score of #{@notifiable.score}"
+              else
+                @notifiable.grading_message
+              end
     Notification
       .create!(
         participant: @participant,
