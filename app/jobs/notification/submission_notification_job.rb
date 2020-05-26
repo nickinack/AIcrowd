@@ -3,6 +3,6 @@ class Notification::SubmissionNotificationJob < ApplicationJob
 
   def perform(submission_id)
     submission = Submission.find(submission_id)
-    NotificationService.new(submission.participant_id, submission, 'submission').call
+    NotificationService.new(submission.participant_id, submission, submission.grading_status_cd).call
   end
 end
