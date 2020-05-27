@@ -2,6 +2,8 @@ class Notification < ApplicationRecord
   belongs_to :participant
   belongs_to :notifiable, polymorphic: true
 
+  default_scope { order(created_at: :desc) }
+
   scope :pristine, -> { where(is_new: true) }
   scope :recent, -> { order(created_at: :desc) }
   scope :unread, -> { where(read_at: nil) }

@@ -9,68 +9,10 @@ class NotificationService
   end
 
   def call
-    eval(@notification_type)
+    send(@notification_type) if ['graded', 'failed'].include?(@notification_type)
   end
 
-  def comment
-    message = "#{@notifiable.participant.name} commented on a discussion thread you are participating in."
-    if @notifiable.participant.image_file.file.present?
-      thumbnail_url = @notifiable.participant.image_file.url
-    else
-      thumbnail_url = 'users/avatar-default.png'
-    end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
-    Notification
-      .create!(
-        participant: @participant,
-        notifiable: @notifiable,
-        notification_type: @notification_type,
-        message: message,
-        thumbnail_url: thumbnail_url,
-        notification_url: notification_url,
-        is_new: true)
-    return true
-  end
-
-  def topic
-    message = "#{@notifiable.participant.name} posted a topic in a challenge you are following."
-    if @notifiable.participant.image_file.file.present?
-      thumbnail_url = @notifiable.participant.image_file.url
-    else
-      thumbnail_url = 'users/avatar-default.png'
-    end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
-    Notification
-      .create!(
-        participant: @participant,
-        notifiable: @notifiable,
-        notification_type: @notification_type,
-        message: message,
-        thumbnail_url: thumbnail_url,
-        notification_url: notification_url,
-        is_new: true)
-    return true
-  end
-
-  def mention
-    message = "#{@notifiable.participant.name} mentioned you in a post."
-    if @notifiable.participant.image_file.file.present?
-      thumbnail_url = @notifiable.participant.image_file.url
-    else
-      thumbnail_url = 'users/avatar-default.png'
-    end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
-    Notification
-      .create!(
-        participant:       @participant,
-        notifiable:        @notifiable,
-        notification_type: @notification_type,
-        message:           message,
-        thumbnail_url:     thumbnail_url,
-        notification_url:  notification_url,
-        is_new:            true)
-    return true
-  end
+  private
 
   def graded
     score   = @notifiable.score
@@ -89,9 +31,9 @@ class NotificationService
   end
 
   def failed
-    messsage = 'Your Learning how to walk submission has failed grading'
-    thumb    = image_url(@notifiable.challenge)
-    link     = challenge_url(@notifiable.challenge)
+    message = 'Your Learning how to walk submission has failed grading'
+    thumb   = image_url(@notifiable.challenge)
+    link    = challenge_url(@notifiable.challenge)
     Notification
       .create!(
         participant:       @participant,
@@ -102,17 +44,4 @@ class NotificationService
         notification_url:  link,
         is_new:            true)
   end
-
-  def leaderboard
-    message = "You moved from 3rd to 5th place on the Learning how to walk leaderboard"
-    thumb = image_url(@notifiable.challenge)
-    link = challenge_url(@notifiable.challenge)
-  end
-
-  def article
-    message = 'A new article has been drafted'
-    thumb = image_url(@notifiable.challenge)
-    link = challenge_url(@notifiable.challenge)
-  end
-
 end

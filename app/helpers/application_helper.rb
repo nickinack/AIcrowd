@@ -151,6 +151,32 @@ module ApplicationHelper
   end
 
   def notification_time(time)
-    time.strftime("%B %d, %Y %H:%M")
+    if time_in_days(time) >= 1
+      "#{pluralize(time_in_days(time), 'day')} Ago"
+    elsif time_in_hours(time) > 0
+      sanitize_html("#{pluralize(time_in_hours(time), 'hour')} Ago")
+    elsif time_in_minutes(time) > 0
+      sanitize_html("#{pluralize(time_in_minutes(time), 'minute')} Ago")
+    else
+      ''
+    end
+  end
+
+  def time_in_days(time)
+    (time_in_seconds(time) / (60 * 60 * 24)).floor
+  end
+
+  def time_in_hours(time)
+    (time_in_seconds(time) / (60 * 60)).floor
+  end
+
+  def time_in_minutes(time)
+    (time_in_seconds(time) / 60).floor
+  end
+
+  def time_in_seconds(time)
+    seconds = Time.current - time
+    seconds = 0 if seconds.nil? || seconds < 0
+    return seconds
   end
 end
