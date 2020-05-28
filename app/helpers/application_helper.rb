@@ -158,7 +158,7 @@ module ApplicationHelper
     elsif time_in_minutes(time) > 0
       sanitize_html("#{pluralize(time_in_minutes(time), 'minute')} Ago")
     else
-      ''
+      'Just now'
     end
   end
 

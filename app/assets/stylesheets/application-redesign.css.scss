@@ -14042,6 +14042,11 @@ html {
   width: 320px;
 }
 
+.notification-bell-icon {
+  background: url("../../assets/img/icon-notifications.svg") no-repeat 0;
+  width: 25px !important;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

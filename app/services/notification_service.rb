@@ -46,7 +46,11 @@ class NotificationService
   end
 
   def leaderboard
-    message = "You have been awarded the #{@notifiable.row_num} position on Challenge #{@notifiable.challenge.challenge}"
+    message               = "You have been awarded the #{@notifiable.row_num} position on Challenge #{@notifiable.challenge.challenge}"
+
+    existing_notification = Notification.where(participant: @participant, notification_type: @notification_type, message: message).first
+    return if existing_notification.present?
+
     thumb   = image_url(@notifiable.challenge)
     link    = challenge_url(@notifiable.challenge)
     Notification
