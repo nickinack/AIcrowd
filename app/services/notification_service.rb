@@ -9,14 +9,14 @@ class NotificationService
   end
 
   def call
-    send(@notification_type) if ['graded', 'failed'].include?(@notification_type)
+    send(@notification_type) if ['graded', 'failed', 'leaderboard'].include?(@notification_type)
   end
 
   private
 
   def graded
     score   = @notifiable.score
-    message = "Your Learning how to walk submission has been graded with a score of #{score}"
+    message = "Your #{@notifiable.challenge.challenge} submission has been graded with a score of #{score}"
     thumb   = image_url(@notifiable.challenge)
     link    = challenge_url(@notifiable.challenge)
     Notification
@@ -31,7 +31,22 @@ class NotificationService
   end
 
   def failed
-    message = 'Your Learning how to walk submission has failed grading'
+    message = "Your #{@notifiable.challenge.challenge} submission has failed grading"
+    thumb   = image_url(@notifiable.challenge)
+    link    = challenge_url(@notifiable.challenge)
+    Notification
+      .create!(
+        participant:       @participant,
+        notifiable:        @notifiable,
+        notification_type: @notification_type,
+        message:           message,
+        thumbnail_url:     thumb,
+        notification_url:  link,
+        is_new:            true)
+  end
+
+  def leaderboard
+    message = "You have been awarded the #{@notifiable.row_num} position on Challenge #{@notifiable.challenge.challenge}"
     thumb   = image_url(@notifiable.challenge)
     link    = challenge_url(@notifiable.challenge)
     Notification
