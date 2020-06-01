@@ -179,4 +179,12 @@ module ApplicationHelper
     seconds = 0 if seconds.nil? || seconds < 0
     return seconds
   end
+
+  def check_notification_status(notifications)
+    notifications.pluck(:is_new).uniq.any?(true) ? 'notification-bell-icon-active' : 'notification-bell-icon'
+  end
+
+  def is_new?(notification)
+    'dropdown-item-active' if notification.is_new
+  end
 end

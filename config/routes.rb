@@ -149,6 +149,7 @@ Rails.application.routes.draw do
     get :sync_mailchimp
     get :regen_api_key
     get :remove_image
+    get :notifications_message
     patch :accept_terms
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch

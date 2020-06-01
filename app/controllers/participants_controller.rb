@@ -97,6 +97,10 @@ class ParticipantsController < ApplicationController
                 notice: 'Image removed.'
   end
 
+  def notifications_message
+    @notifications = current_user.notifications
+  end
+
   private
 
   def set_participant

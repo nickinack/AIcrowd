@@ -9,16 +9,17 @@ class NotificationService
   end
 
   def call
-    send(@notification_type) if ['graded', 'failed', 'leaderboard'].include?(@notification_type)
+    send(@notification_type) if ['graded', 'failed', 'leaderboard'].include?(@notification_type) && @participant.present?
   end
 
   private
 
   def graded
-    score   = @notifiable.score
-    message = "Your #{@notifiable.challenge.challenge} submission has been graded with a score of #{score}"
-    thumb   = image_url(@notifiable.challenge)
-    link    = challenge_url(@notifiable.challenge)
+    score   = @notifiable.score || 0.0
+    message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} has been graded with a score of #{score}"
+    thumb   = @notifiable.challenge.banner_file.url
+    link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
+
     Notification
       .create!(
         participant:       @participant,
@@ -31,9 +32,10 @@ class NotificationService
   end
 
   def failed
-    message = "Your #{@notifiable.challenge.challenge} submission has failed grading"
-    thumb   = image_url(@notifiable.challenge)
-    link    = challenge_url(@notifiable.challenge)
+    message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} failed to evaluate."
+    thumb   = @notifiable.challenge.banner_file.url
+    link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
+
     Notification
       .create!(
         participant:       @participant,
@@ -46,13 +48,14 @@ class NotificationService
   end
 
   def leaderboard
-    message               = "You have been awarded the #{@notifiable.row_num} position on Challenge #{@notifiable.challenge.challenge}"
+    message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.
+    challenge.challenge} leaderboard"
+    existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
 
-    existing_notification = Notification.where(participant: @participant, notification_type: @notification_type, message: message).first
-    return if existing_notification.present?
+    return if message == existing_notification.message
 
-    thumb   = image_url(@notifiable.challenge)
-    link    = challenge_url(@notifiable.challenge)
+    thumb   = @notifiable.challenge.banner_file.url
+    link    = challenge_leaderboards_url(@notifiable.challenge)
     Notification
       .create!(
         participant:       @participant,

@@ -14044,7 +14044,20 @@ html {
 
 .notification-bell-icon {
   background: url("../../assets/img/icon-notifications.svg") no-repeat 0;
-  width: 25px !important;
+  width: 30px !important;
+}
+
+.notification-bell-icon-active {
+  background: url("../../assets/img/icon-notifications-active.svg") no-repeat 0;
+  width: 30px !important;
+}
+
+.notification-img {
+  width: 10%;
+}
+
+.dropdown-item-active{
+  background-color: #F8F9F9;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
