@@ -6,7 +6,7 @@
       <!-- notification -->
       <% if @notifications.present? %>
         <% @notifications&.first(5).each do |notification| %>
-          <%= link_to notification.notification_url, class: "dropdown-item #{is_new?(notification)}" do %>
+          <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item #{is_new?(notification)}" do %>
             <div class="dropdown-item-img">
               <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
             </div>
@@ -19,7 +19,7 @@
         <% end %>
         <% if @notifications.count > 5 %>
           <div class="dropdown-divider"></div>
-          <%= link_to 'See all', participant_notifications_message_path(current_participant.id), class: "dropdown-item" %>
+          <%= link_to 'See all', participant_notifications_message_path(current_participant), class: "dropdown-item" %>
         <% end %>
       <% else %>
         <a href="#" class='dropdown-item'>

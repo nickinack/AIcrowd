@@ -101,6 +101,14 @@ class ParticipantsController < ApplicationController
     @notifications = current_user.notifications
   end
 
+  def read_notification
+    @notification = current_user.notifications.find(params[:id])
+    @notification.update(is_new: false)
+
+    redirect_url = @notification.notification_url.present? ? @notification.notification_url : root_url
+    redirect_to redirect_url
+  end
+
   private
 
   def set_participant

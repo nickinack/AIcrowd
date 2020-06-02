@@ -14,7 +14,7 @@
     <% @notifications.each do |notification| %>
     <div class="topic-comment <%= is_new?(notification) %>">
       <div class="discussion-topic-body">
-        <%= link_to notification.notification_url, class: "dropdown-item" do %>
+        <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item" do %>
           <div>
             <%= image_tag notification.thumbnail_url, class: 'notification-img' if notification.thumbnail_url.present? %>
             <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
