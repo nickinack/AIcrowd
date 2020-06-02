@@ -1,14 +1,14 @@
 <!-- notifications -->
 <div class="app-header-notifications">
   <div class="dropdown">
-    <a class="dropdown-toggle <%= check_notification_status(@notifications) %>" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+    <a class="dropdown-toggle <%= check_notification_status(@notifications) if @notifications.present? %>" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
     <div class="dropdown-menu dropdown-menu-notifications dropdown-menu-right">
       <!-- notification -->
       <% if @notifications.present? %>
         <% @notifications&.first(5).each do |notification| %>
           <%= link_to notification.notification_url, class: "dropdown-item #{is_new?(notification)}" do %>
             <div class="dropdown-item-img">
-              <%= image_tag notification.thumbnail_url %>
+              <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
             </div>
             <div>
               <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>

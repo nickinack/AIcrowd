@@ -52,7 +52,7 @@ class NotificationService
     challenge.challenge} leaderboard"
     existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
 
-    return if message == existing_notification.message
+    return if message == existing_notification&.message
 
     thumb   = @notifiable.challenge.banner_file.url
     link    = challenge_leaderboards_url(@notifiable.challenge)
