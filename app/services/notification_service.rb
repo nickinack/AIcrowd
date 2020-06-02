@@ -17,7 +17,7 @@ class NotificationService
   def graded
     score   = @notifiable.score || 0.0
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} has been graded with a score of #{score}"
-    thumb   = @notifiable.challenge.banner_file.url
+    thumb   = @notifiable.challenge.image_file.url
     link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
 
     Notification
@@ -33,7 +33,7 @@ class NotificationService
 
   def failed
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} failed to evaluate."
-    thumb   = @notifiable.challenge.banner_file.url
+    thumb   = @notifiable.challenge.image_file.url
     link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
 
     Notification
@@ -54,7 +54,7 @@ class NotificationService
 
     return if message == existing_notification&.message
 
-    thumb   = @notifiable.challenge.banner_file.url
+    thumb   = @notifiable.challenge.image_file.url
     link    = challenge_leaderboards_url(@notifiable.challenge)
     Notification
       .create!(
