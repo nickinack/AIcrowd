@@ -26,12 +26,15 @@ class LeaderboardsController < ApplicationController
     elsif @post_challenge
       policy_scope(OngoingLeaderboard)
         .where(filter)
+        .freeze_record(current_participant)
         .page(params[:page])
         .per(10)
         .order(:seq)
     else
+      byebug
       policy_scope(Leaderboard)
         .where(filter)
+        .freeze_record(current_participant)
         .page(params[:page])
         .per(10)
         .order(:seq)
