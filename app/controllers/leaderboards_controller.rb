@@ -31,7 +31,6 @@ class LeaderboardsController < ApplicationController
         .per(10)
         .order(:seq)
     else
-      byebug
       policy_scope(Leaderboard)
         .where(filter)
         .freeze_record(current_participant)
