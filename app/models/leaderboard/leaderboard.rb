@@ -16,7 +16,7 @@ class Leaderboard < SqlView
     if ch_round.freeze_flag && freeze_time(ch_round, participant.id)
       freeze_beyond_time = Time.now.utc - ch_round.freeze_duration.to_i.hours
 
-      participant_and_before_freeze_record = where("submitter_id = ? OR created_at < ?", participant.id, freeze_beyond_time)
+      participant_and_before_freeze_record = where("submitter_id = ? OR refreshed_at < ?", participant.id, freeze_beyond_time)
       return participant_and_before_freeze_record
     end
 
