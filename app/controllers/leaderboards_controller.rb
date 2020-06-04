@@ -20,6 +20,7 @@ class LeaderboardsController < ApplicationController
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
+        .freeze_record(current_participant)
         .page(params[:page])
         .per(10)
         .order(:row_num)

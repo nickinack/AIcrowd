@@ -10,17 +10,17 @@ class Leaderboard < SqlView
   default_scope { order(seq: :asc) }
 
   def self.freeze_record(participant)
-    return self if !participant.present? || participant_is_organizer(participant.email) || all.where(submitter_type: "Participant").pluck(:submitter_id).exclude?(participant.id)
+    return all if !participant.present? || participant_is_organizer(participant.email) || all.where(submitter_type: "Participant").pluck(:submitter_id).exclude?(participant.id)
 
     ch_round = first.challenge_round
     if ch_round.freeze_flag && freeze_time(ch_round, participant.id)
       freeze_beyond_time = Time.now.utc - ch_round.freeze_duration.to_i.hours
 
-      participant_and_before_freeze_record = where("submitter_id = ? OR refreshed_at < ?", participant.id, freeze_beyond_time)
+      participant_and_before_freeze_record = where("submitter_id = ? OR created_at < ?", participant.id, freeze_beyond_time)
       return participant_and_before_freeze_record
     end
 
-    self
+    all
   end
 
   def self.participant_is_organizer(participant_email)
