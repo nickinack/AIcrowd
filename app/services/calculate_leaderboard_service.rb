@@ -12,6 +12,7 @@ class CalculateLeaderboardService
 
   def call
     start_time = Time.zone.now
+
     if @round.submissions.where(meta_challenge_id: @meta_challenge_id).blank?
       purge_leaderboard
     else
@@ -76,9 +77,11 @@ class CalculateLeaderboardService
     when 'leaderboard'
       post_challenge = '(FALSE)'
       cuttoff_dttm   = 'current_timestamp'
+      # "'#{Time.current.to_s(:db)}'"
     when 'ongoing'
       post_challenge = '(TRUE,FALSE)'
       cuttoff_dttm   = 'current_timestamp'
+      # "'#{Time.current.to_s(:db)}'"
     when 'previous'
       post_challenge = '(FALSE)'
       cuttoff_dttm   = window_border_dttm

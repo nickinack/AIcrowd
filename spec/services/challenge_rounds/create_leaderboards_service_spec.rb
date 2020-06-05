@@ -146,5 +146,26 @@ describe ChallengeRounds::CreateLeaderboardsService do
         end
       end
     end
+
+    context 'benchmarking' do
+      let!(:submissions) do
+        100.times do
+          random_score = SecureRandom.random_number
+          create(:submission, :graded, created_at: Time.current - 1.hour, score: random_score, score_display: random_score, challenge: challenge, challenge_round: challenge_round)
+        end
+      end
+
+      it 'measure time for both services' do
+        challenge_round
+
+        puts Benchmark.measure {
+          CalculateLeaderboardService.new(challenge_round_id: challenge_round.id, meta_challenge_id: nil).call
+        }
+
+        puts Benchmark.measure {
+          ChallengeRounds::CreateLeaderboardsService.new(challenge_round: challenge_round, meta_challenge_id: nil).call
+        }
+      end
+    end
   end
 end
