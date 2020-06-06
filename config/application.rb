@@ -59,6 +59,8 @@ module Crowdai
         resource '/assets/*', headers: :any, methods: [:get, :post, :options]
       end
     end
+    
+    config.assets.initialize_on_precompile = false
 
     console do
       ARGV.push "-r", root.join("lib/console.rb")
